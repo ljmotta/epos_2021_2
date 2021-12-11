@@ -145,6 +145,26 @@ public:
     FCFS(int p = NORMAL, Tn & ... an);
 };
 
+class RM: public Priority
+{
+public:
+    const Microsecond period() { return _period; }
+    void period(const Microsecond & p) { _period = p; }
+
+public:
+    Microsecond _period;
+
+public:
+    static const bool timed = false;
+    static const bool dynamic = false;
+    static const bool preemptive = true;
+
+public:
+    RM(int p = APERIODIC): Priority(p) {}
+    RM(const Microsecond & d, const Microsecond & p = SAME, const Microsecond & c = UNKNOWN, unsigned int cpu = ANY)
+    : Priority(p ? p : d) {}
+};
+
 __END_SYS
 
 #endif

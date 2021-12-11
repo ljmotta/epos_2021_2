@@ -26,10 +26,10 @@ class Periodic_Thread: public Thread
 {
 public:
     enum {
-        SAME    = Real_Time_Scheduler_Common::SAME,
-        NOW     = Real_Time_Scheduler_Common::NOW,
-        UNKNOWN = Real_Time_Scheduler_Common::UNKNOWN,
-        ANY     = Real_Time_Scheduler_Common::ANY
+        SAME    = Scheduling_Criterion_Common::SAME,
+        NOW     = Scheduling_Criterion_Common::NOW,
+        UNKNOWN = Scheduling_Criterion_Common::UNKNOWN,
+        ANY     = Scheduling_Criterion_Common::ANY
     };
 
 protected:
