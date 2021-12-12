@@ -35,9 +35,11 @@ class System
     friend void * ::operator new[](size_t, const EPOS::System_Allocator &);	// for _heap
     friend void ::operator delete(void *);					// for _heap
     friend void ::operator delete[](void *);					// for _heap
+    friend void * shared_memory();
 
 public:
     static System_Info * const info() { assert(_si); return _si; }
+    static Segment * _shared_memory;
 
 private:
     static void init();
@@ -75,6 +77,11 @@ extern "C"
         else
             Heap::untyped_free(System::_heap, ptr);
     }
+}
+
+inline void * shared_memory() {
+    __USING_SYS;
+    return Address_Space(MMU::current()).attach(System::_shared_memory);
 }
 
 // C++ dynamic memory allocators and deallocators

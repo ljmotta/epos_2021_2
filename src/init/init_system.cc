@@ -32,6 +32,8 @@ public:
             System::_heap = new (&System::_preheap[0]) Heap(MMU::alloc(MMU::pages(HEAP_SIZE)), HEAP_SIZE);
         db<Init>(INF) << "done!" << endl;
 
+        System::_shared_memory = new (System::_heap->alloc(sizeof(Segment))) Segment(1024);
+
         db<Init>(INF) << "Initializing the machine: " << endl;
         Machine::init();
         db<Init>(INF) << "done!" << endl;

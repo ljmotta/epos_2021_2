@@ -19,6 +19,7 @@ System_Info * System::_si = reinterpret_cast<System_Info *>(Memory_Map::SYS_INFO
 char System::_preheap[];
 Segment * System::_heap_segment;
 Heap * System::_heap;
+Segment * System::_shared_memory;
 
 __END_SYS
 
