@@ -55,7 +55,7 @@ public:
         int * addr = reinterpret_cast<int *>(e->object() + e->size());
 
         if(typed)
-            *addr++ = reinterpret_cast<int>(this);
+            *addr++ = *((int*)(this));
         *addr++ = bytes;
 
         db<Heaps>(TRC) << ") => " << reinterpret_cast<void *>(addr) << endl;

@@ -94,7 +94,7 @@ UUID                    = $(shell cat /proc/sys/kernel/random/uuid | sed 's/-//g
 # Compiler prefixes
 ia32_COMP_PREFIX	:= /usr/bin/x86_64-linux-gnu-
 armv7_COMP_PREFIX	:= /usr/bin/arm-none-eabi-
-armv8_COMP_PREFIX	:= /usr/bin/arm-none-eabi-
+armv8_COMP_PREFIX	:= /usr/bin/aarch64-none-linux-gnu-
 rv32_COMP_PREFIX	:= /usr/local/rv32/bin/riscv32-unknown-linux-gnu-
 rv64_COMP_PREFIX	:= /usr/bin/riscv64-linux-gnu-
 COMP_PREFIX		= $($(ARCH)_COMP_PREFIX)
@@ -137,7 +137,7 @@ cortex_IMG_SUFFIX	:= .bin
 endif
 
 ifeq ($(MMOD),raspberry_pi3)
-cortex_CC_FLAGS		:= -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=vfp
+cortex_CC_FLAGS		:= -mcpu=cortex-a53
 cortex_AS_FLAGS		:= -mcpu=cortex-a53
 cortex_LD_FLAGS		:=
 cortex_EMULATOR		= qemu-system-aarch64 -M raspi2 -cpu cortex-a53 -smp 4 -m 1G -serial null -serial mon:stdio -nographic -no-reboot -device loader,file=$(APPLICATION).img,addr=$(IMAGE_ADDR),force-raw=on -kernel 

@@ -93,13 +93,13 @@ private:
     static void hard_fault(Interrupt_Id i);
 
     // Physical handler
-    static void entry() __attribute__ ((naked));
-    static void prefetch_abort() __attribute__ ((naked));
-    static void undefined_instruction() __attribute__ ((naked));
-    static void software_interrupt() __attribute__ ((naked));
-    static void data_abort() __attribute__ ((naked));
-    static void reserved() __attribute__ ((naked));
-    static void fiq() __attribute__ ((naked));
+    static void entry();
+    static void prefetch_abort();
+    static void undefined_instruction();
+    static void software_interrupt();
+    static void data_abort();
+    static void reserved();
+    static void fiq();
 
     static void kill();
 

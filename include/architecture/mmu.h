@@ -190,7 +190,7 @@ public:
         if(bytes) {
             List::Element * e = _free.search_decrementing(bytes);
             if(e)
-                phy = reinterpret_cast<unsigned int>(e->object()) + e->size();
+                phy = reinterpret_cast<unsigned int *>(e->object()) + e->size();
             else
                 db<MMU>(ERR) << "MMU::alloc() failed!" << endl;
         }

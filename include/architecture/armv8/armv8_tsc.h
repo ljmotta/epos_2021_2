@@ -5,11 +5,6 @@
 
 #include <architecture/cpu.h>
 #include <architecture/tsc.h>
-#include <system/memory_map.h>
-
-#define __ic_common_only__
-#include <machine/ic.h>
-#undef __ic_common_only__
 
 __BEGIN_SYS
 
@@ -19,10 +14,13 @@ class TSC: private TSC_Common
     friend class IC;
 
 private:
-    static const Hertz CLOCK = Traits<Build>::MODEL == Traits<Build>::Raspberry_Pi3 ? 1000000 
-                             : Traits<Build>::MODEL == Traits<Build>::Zynq ? Traits<CPU>::CLOCK / 2
-                             : Traits<CPU>::CLOCK;
-    static const PPB ACCURACY = 40000; // ppb
+    static const unsigned int CLOCK = Traits<Build>::MODEL == Traits<Build>::Raspberry_Pi3 ? 1000000 : Traits<CPU>::CLOCK; /// (Traits<Build>::MODEL == Traits<Build>::Zynq ? 2 : 1);
+    static const unsigned int ACCURACY = 40000; // ppb
+
+    enum {
+        TSC_BASE = Traits<Build>::MODEL == Traits<Build>::Raspberry_Pi3 ? 0x3f003000 // GLOBAL_TIMER_BASE
+	         : 0
+    };
 
     // Cortex-M3 GPTM registers offsets
     enum {              // Description
@@ -48,6 +46,7 @@ private:
         STC3                        = 0X18      // Compare 3 - Value used to generate interrupt 3
         // Interrupts mapped to "Enable IRQ 1" - c1 and c3 == irq1 and irq3
     };
+
 
 public:
     using TSC_Common::Time_Stamp;
@@ -79,7 +78,6 @@ public:
         } while(reg(GTCTRH) != high);
 
         return (high << 32) | low;
-
 #endif
 
 #endif
@@ -94,11 +92,11 @@ public:
 private:
     static void init();
 
-    static volatile CPU::Reg32 & reg(unsigned int o) { return reinterpret_cast<volatile CPU::Reg32 *>(Memory_Map::TSC_BASE)[o / sizeof(CPU::Reg32)]; }
+    static volatile CPU::Reg32 & reg(unsigned int o) { return reinterpret_cast<volatile CPU::Reg32 *>(TSC_BASE)[o / sizeof(CPU::Reg32)]; }
 
 #if defined(__mmod_emote3__) || defined(__mmod_lm3s811__)
 
-    static void int_handler(IC_Common::Interrupt_Id int_id) { _overflow++; }
+    static void int_handler(const unsigned int & int_id) { _overflow++; }
 
     static volatile Time_Stamp _overflow;
 

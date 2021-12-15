@@ -11,7 +11,7 @@ __BEGIN_UTIL
 class This_Thread
 {
 public:
-    static volatile CPU::Reg id();
+    static volatile CPU::Reg32 id();
     static void not_booting() { _not_booting = true; }
 
 private:

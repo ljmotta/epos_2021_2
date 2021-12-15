@@ -913,9 +913,9 @@ void _reset()
 {
     // QEMU get us here in SVC mode with interrupt disabled, but the real Raspberry Pi3 starts in hypervisor mode, so we must switch to SVC mode
     if(!Traits<Machine>::SIMULATED) {
-        CPU::Reg cpsr = CPU::cpsr();
-        cpsr &= ~CPU::FLAG_M;           // clear mode bits
-        cpsr |= CPU::MODE_SVC;          // set supervisor flag
+        // CPU::Reg cpsr = CPU::cpsr();
+        // cpsr &= ~CPU::FLAG_M;           // clear mode bits
+        // cpsr |= CPU::MODE_SVC;          // set supervisor flag
         CPU::cpsrc(cpsr);               // enter supervisor mode
         CPU::Reg address = CPU::ra();
         CPU::elr_hyp(address);
